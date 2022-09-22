@@ -66,7 +66,10 @@ public class SequenceHandler {
 			 * The code here defines the main sequence of events in the experiment *
 			 **********************************************************************/
 			case 1:
-				ClickPage.Run(Instructions.Get(0), "Next");
+				IOtask1Block block1 = new IOtask1Block();
+				block1.nTargets = 3;
+				block1.nTrials = 10;
+				block1.Run();
 				break;
 			case 2:
 				Finish.Run();

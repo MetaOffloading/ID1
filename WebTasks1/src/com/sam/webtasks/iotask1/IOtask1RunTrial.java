@@ -24,11 +24,15 @@ import com.ait.lienzo.client.widget.LienzoPanel;
 import com.ait.lienzo.shared.core.types.ColorName;
 import com.ait.lienzo.shared.core.types.TextAlign;
 import com.ait.lienzo.shared.core.types.TextBaseLine;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.sam.webtasks.basictools.Names;
@@ -37,7 +41,11 @@ import com.sam.webtasks.basictools.TimeStamp;
 import com.sam.webtasks.client.SequenceHandler;
 
 public class IOtask1RunTrial {
+	static String reminders="";
+	
 	public static void Run() {
+		reminders="";
+		
 		// get block context
 		IOtask1Block block = IOtask1BlockContext.getContext();
 
@@ -94,12 +102,35 @@ public class IOtask1RunTrial {
 
 		final VerticalPanel wrapper2 = new VerticalPanel();
 		wrapper2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		
+		final HorizontalPanel buttonPanel = new HorizontalPanel();
+		
+		final Button showReminders = new Button("Show reminders");
+		final Button addReminder = new Button("Add reminder");
+		
+		buttonPanel.add(showReminders);
+		buttonPanel.add(addReminder);
+		
+		wrapper2.add(buttonPanel);
 		wrapper2.add(wrapper1);
 
 		verticalPanel.add(wrapper2);
 
 		RootPanel.get().add(verticalPanel);
-
+		
+	    // set up handlers for the reminder buttons
+		showReminders.addClickHandler(new ClickHandler() {
+	        public void onClick(ClickEvent event) {
+	            Window.alert(reminders);
+	        }
+	    });
+		
+		addReminder.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				reminders += Window.prompt("Type your reminder below:", "") + "\n";
+			}
+		});
+		
 		// set up outline
 		Layer bgLayer = new Layer();
 
@@ -210,6 +241,20 @@ public class IOtask1RunTrial {
 			final int finalc = c; // need to set up a final version of the c variable so that it works in the code
 									// below
 
+			//change colour if double-clicked
+			circleGroup[c].addNodeMouseDoubleClickHandler(new NodeMouseDoubleClickHandler() {
+				//int clickedCircle = IOtask1BlockContext.getClickedCircle();
+
+				public void onNodeMouseDoubleClick(NodeMouseDoubleClickEvent event) {
+					if(circles[finalc].getFillColor() == "yellow") {
+						circles[finalc].setFillColor(ColorName.LIGHTBLUE);
+					} else {
+						circles[finalc].setFillColor(ColorName.YELLOW);
+					}
+					circleLayer.draw();
+				}
+			});
+			
 			circleGroup[c].addNodeDragStartHandler(new NodeDragStartHandler() {
 				public void onNodeDragStart(NodeDragStartEvent event) {
 					// reset the double click flag. this is used to quit the task
