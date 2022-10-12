@@ -69,6 +69,7 @@ public class SequenceHandler {
 				IOtask1Block block1 = new IOtask1Block();
 				block1.nTargets = 3;
 				block1.nTrials = 10;
+				//block1.offloadCondition = Names.REMINDERS_OPTIONAL;
 				block1.Run();
 				break;
 			case 2:

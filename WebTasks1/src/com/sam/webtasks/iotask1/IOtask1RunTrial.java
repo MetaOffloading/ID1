@@ -41,11 +41,12 @@ import com.sam.webtasks.basictools.TimeStamp;
 import com.sam.webtasks.client.SequenceHandler;
 
 public class IOtask1RunTrial {
-	static String reminders="";
-	
+	static String reminders = "";
+	//static boolean reminderSet = false;
+
 	public static void Run() {
-		reminders="";
-		
+		reminders = "";
+
 		// get block context
 		IOtask1Block block = IOtask1BlockContext.getContext();
 
@@ -102,35 +103,46 @@ public class IOtask1RunTrial {
 
 		final VerticalPanel wrapper2 = new VerticalPanel();
 		wrapper2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		
+
 		final HorizontalPanel buttonPanel = new HorizontalPanel();
-		
-		final Button showReminders = new Button("Show reminders");
-		final Button addReminder = new Button("Add reminder");
-		
-		buttonPanel.add(showReminders);
+
+		final Button addReminder = new Button("Reminders");
+
 		buttonPanel.add(addReminder);
-		
-		wrapper2.add(buttonPanel);
+
+		addReminder.setStyleName("bottomMarginTiny");
+
+		if (block.offloadCondition == Names.REMINDERS_RETROSPECTIVE_MANDATORY) {
+			wrapper2.add(buttonPanel);
+		}
+
 		wrapper2.add(wrapper1);
 
 		verticalPanel.add(wrapper2);
 
 		RootPanel.get().add(verticalPanel);
-		
-	    // set up handlers for the reminder buttons
-		showReminders.addClickHandler(new ClickHandler() {
-	        public void onClick(ClickEvent event) {
-	            Window.alert(reminders);
-	        }
-	    });
-		
+
 		addReminder.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				reminders += Window.prompt("Type your reminder below:", "") + "\n";
+				String reminder = "";
+
+				reminder += Window.prompt(reminders + "\nAdd new reminder below:", "");
+
+				if (!reminder.isEmpty()) {
+					if (!reminder.contentEquals("null")) {
+						//reminderSet = true;
+						reminders += reminder + "\n";
+					}
+				}
+
+				String data = IOtask1BlockContext.getBlockNum() + ",";
+				data = data + IOtask1BlockContext.getTrialNum() + ",";
+				data = data + reminders;
+
+				PHP.logData("retrospectiveReminder", data, false);
 			}
 		});
-		
+
 		// set up outline
 		Layer bgLayer = new Layer();
 
@@ -241,20 +253,31 @@ public class IOtask1RunTrial {
 			final int finalc = c; // need to set up a final version of the c variable so that it works in the code
 									// below
 
-			//change colour if double-clicked
+			// change colour if double-clicked
 			circleGroup[c].addNodeMouseDoubleClickHandler(new NodeMouseDoubleClickHandler() {
-				//int clickedCircle = IOtask1BlockContext.getClickedCircle();
+				// int clickedCircle = IOtask1BlockContext.getClickedCircle();
 
 				public void onNodeMouseDoubleClick(NodeMouseDoubleClickEvent event) {
-					if(circles[finalc].getFillColor() == "yellow") {
-						circles[finalc].setFillColor(ColorName.LIGHTBLUE);
-					} else {
-						circles[finalc].setFillColor(ColorName.YELLOW);
+					if (block.offloadCondition == Names.REMINDERS_PROSPECTIVE_MANDATORY) {
+						if (circles[finalc].getFillColor() == "yellow") {
+							//reminderSet = true;
+
+							circles[finalc].setFillColor(ColorName.LIGHTBLUE);
+
+							String data = IOtask1BlockContext.getBlockNum() + ",";
+							data = data + IOtask1BlockContext.getTrialNum() + ",";
+							data = data + finalc;
+
+							PHP.logData("prospectiveReminder", data, false);
+						} else {
+							circles[finalc].setFillColor(ColorName.YELLOW);
+						}
+
+						circleLayer.draw();
 					}
-					circleLayer.draw();
 				}
 			});
-			
+
 			circleGroup[c].addNodeDragStartHandler(new NodeDragStartHandler() {
 				public void onNodeDragStart(NodeDragStartEvent event) {
 					// reset the double click flag. this is used to quit the task
@@ -278,6 +301,11 @@ public class IOtask1RunTrial {
 					if (Math.pow(xDist, 2) <= Math.pow(circleRadius, 2)) {
 						if (Math.pow(yDist, 2) <= Math.pow(circleRadius, 2)) {
 							IOtask1BlockContext.setClickedCircle(finalc);
+
+							// circle clicked out of sequence?
+							if (IOtask1BlockContext.getClickedCircle() != IOtask1BlockContext.getNextCircle()) {
+								//reminderSet = true;
+							}
 						}
 					}
 				}
@@ -306,71 +334,81 @@ public class IOtask1RunTrial {
 					}
 
 					if (IOtask1BlockContext.getExitFlag() > 0) { // if the circle has been dragged out of the box
-						DragContext dC = event.getDragContext();
-						int clickedCircle = IOtask1BlockContext.getClickedCircle();
+						//if (reminderSet) {
+							DragContext dC = event.getDragContext();
+							int clickedCircle = IOtask1BlockContext.getClickedCircle();
 
-						if (IOtask1BlockContext.allOffloaded()) { // check whether participant has offloaded before continuing. If reminders are not mandatory, this function automatically returns true
-							// is the clicked circle the next one in the sequence?
-							if (IOtask1BlockContext.getClickedCircle() == IOtask1BlockContext.getNextCircle()) {
-								// fix position of circle on screen
-								circles[clickedCircle].setDragBounds(
-										new DragBounds(dC.getEventX(), dC.getEventY(), dC.getEventX(), dC.getEventY()));
+							if (IOtask1BlockContext.allOffloaded()) { // check whether participant has offloaded before
+																		// continuing. If reminders are not mandatory,
+																		// this function automatically returns true
+								// is the clicked circle the next one in the sequence?
+								if (IOtask1BlockContext.getClickedCircle() == IOtask1BlockContext.getNextCircle()) {
+									// fix position of circle on screen
+									circles[clickedCircle].setDragBounds(new DragBounds(dC.getEventX(), dC.getEventY(),
+											dC.getEventX(), dC.getEventY()));
 
-								if (IOtask1BlockContext.defaultExit()) { // has the circle been dragged to the default
-																			// exit?
-									// change circle colour to purple
-									circles[clickedCircle].setFillColor(ColorName.PURPLE);
+									if (IOtask1BlockContext.defaultExit()) { // has the circle been dragged to the
+																				// default
+																				// exit?
+										// change circle colour to purple
+										circles[clickedCircle].setFillColor(ColorName.PURPLE);
 
-									// remove text from circle
-									circleText[clickedCircle].setVisible(false);
+										// remove text from circle
+										circleText[clickedCircle].setVisible(false);
 
-								} else if (IOtask1BlockContext.corectTargetResponse()) { // correct target response
-									if (block.showTargetFeedback) { // change colour of circle
-										circles[clickedCircle].setStrokeColor(ColorName.PINK);
-										circles[clickedCircle].setStrokeWidth(3);
-										circles[clickedCircle].setFillColor(ColorName.GREENYELLOW);
+									} else if (IOtask1BlockContext.corectTargetResponse()) { // correct target response
+										if (block.showTargetFeedback) { // change colour of circle
+											circles[clickedCircle].setStrokeColor(ColorName.PINK);
+											circles[clickedCircle].setStrokeWidth(3);
+											circles[clickedCircle].setFillColor(ColorName.GREENYELLOW);
+										}
+
+										// remove text
+										circleText[clickedCircle].setVisible(false);
+									} else { // incorrect target response
+										if (block.showTargetFeedback) { // change colour of circle
+											circles[clickedCircle].setStrokeColor(ColorName.PINK);
+											circles[clickedCircle].setStrokeWidth(3);
+											circles[clickedCircle].setFillColor(ColorName.RED);
+										}
+
+										// remove text
+										circleText[clickedCircle].setVisible(false);
 									}
+								} else {
+									if (!IOtask1BlockContext.getRedFlashFlag()) {
+										circles[IOtask1BlockContext.getNextCircle()].setFillColor(ColorName.RED);
+										circleLayer.draw();
 
-									// remove text
-									circleText[clickedCircle].setVisible(false);
-								} else { // incorrect target response
-									if (block.showTargetFeedback) { // change colour of circle
-										circles[clickedCircle].setStrokeColor(ColorName.PINK);
-										circles[clickedCircle].setStrokeWidth(3);
-										circles[clickedCircle].setFillColor(ColorName.RED);
+										new Timer() {
+											public void run() {
+												circles[IOtask1BlockContext.getNextCircle()]
+														.setFillColor(ColorName.YELLOW);
+												circleLayer.draw();
+											}
+										}.schedule(400);
+
+										IOtask1BlockContext.setRedFlashFlag(true); // by setting this to true, we
+																					// prevent
+																					// the
+																					// code above from being tripped
+																					// repeatedly
 									}
-
-									// remove text
-									circleText[clickedCircle].setVisible(false);
+									IOtask1BlockContext.setExitFlag(0);
 								}
 							} else {
-								if (!IOtask1BlockContext.getRedFlashFlag()) {
-									circles[IOtask1BlockContext.getNextCircle()].setFillColor(ColorName.RED);
-									circleLayer.draw();
+								// first time someone tries to remove a circle without offloading, give a pop-up
+								// window alert
+								Window.alert("You need to set reminders before you can continue. You can "
+										+ "do this by moving the position of special circles.");
 
-									new Timer() {
-										public void run() {
-											circles[IOtask1BlockContext.getNextCircle()].setFillColor(ColorName.YELLOW);
-											circleLayer.draw();
-										}
-									}.schedule(400);
-
-									IOtask1BlockContext.setRedFlashFlag(true); // by setting this to true, we prevent
-																				// the
-																				// code above from being tripped
-																				// repeatedly
-								}
-								IOtask1BlockContext.setExitFlag(0);
 							}
 						} else {
-							// first time someone tries to remove a circle without offloading, give a pop-up
-							// window alert
-							Window.alert("You need to set reminders before you can continue. You can "
-									+ "do this by moving the position of special circles.");
-
+							Window.alert(
+									"You have not yet set any reminders. You need to do this before you can continue");
 						}
 					}
-				}
+				//}
 			});
 
 			// set up the NodeDragEnd handler. This needs to stop ther timer recording the
@@ -458,7 +496,11 @@ public class IOtask1RunTrial {
 					}
 
 					if (IOtask1BlockContext.getExitFlag() > 0) { // circle dragged out of box
-						if (IOtask1BlockContext.getClickedCircle() == IOtask1BlockContext.getNextCircle()) { // circle was next in sequence
+						if (IOtask1BlockContext.getClickedCircle() == IOtask1BlockContext.getNextCircle()) { // circle
+																												// was
+																												// next
+																												// in
+																												// sequence
 							if (IOtask1BlockContext.allOffloaded()) {
 								// run the animation
 								AnimationProperties props = new AnimationProperties();

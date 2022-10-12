@@ -7,6 +7,8 @@ public class Names {
 	public final static int REMINDERS_MANDATORY_ANYCIRCLE=2; //mandatory to set reminders, but it works to move any circles, not just the specified targets
 	public final static int REMINDERS_MANDATORY_TARGETONLY=3;//mandatory to set reminders for the specified targets
 	public final static int REMINDERS_VARIABLE=4;  //can set reminders for circles associated with some target direction but not others
+	public final static int REMINDERS_PROSPECTIVE_MANDATORY=5; //must set a prospective reminder
+	public final static int REMINDERS_RETROSPECTIVE_MANDATORY=6; //must set a retrospective reminder
 		
 	//perceptual task version
 	public final static int PERCEPT_NUMBER = 0; //number task
