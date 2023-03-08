@@ -66,13 +66,36 @@ public class SequenceHandler {
 			 * The code here defines the main sequence of events in the experiment *
 			 **********************************************************************/
 			case 1:
-				IOtask1Block block1 = new IOtask1Block();
-				block1.nTargets = 3;
-				block1.nTrials = 10;
-				//block1.offloadCondition = Names.REMINDERS_OPTIONAL;
-				block1.Run();
+				ClickPage.Run("Optional reminders", "Next");
 				break;
 			case 2:
+				IOtask1Block block1 = new IOtask1Block();
+				block1.nTargets = 3;
+				block1.nTrials = 1;
+				block1.offloadCondition = Names.REMINDERS_OPTIONAL;
+				block1.Run();
+				break;
+			case 3:
+				ClickPage.Run("Mandatory prospective reminder", "Next");
+				break;
+			case 4:
+				IOtask1Block block2 = new IOtask1Block();
+				block2.nTargets = 3;
+				block2.nTrials = 1;
+				block2.offloadCondition = Names.REMINDERS_PROSPECTIVE_MANDATORY;
+				block2.Run();
+				break;
+			case 5:
+				ClickPage.Run("Mandatory retrospective reminder", "Next");
+				break;
+			case 6:
+				IOtask1Block block3 = new IOtask1Block();
+				block3.nTargets = 3;
+				block3.nTrials = 1;
+				block3.offloadCondition = Names.REMINDERS_RETROSPECTIVE_MANDATORY;
+				block3.Run();
+				break;
+			case 7:
 				Finish.Run();
 				break;
 			}

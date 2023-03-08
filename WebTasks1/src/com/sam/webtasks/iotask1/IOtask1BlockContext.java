@@ -41,19 +41,49 @@ public class IOtask1BlockContext {
 		if ((blockContext.offloadCondition == Names.REMINDERS_NOTALLOWED) | (blockContext.offloadCondition == Names.REMINDERS_OPTIONAL)) {
 			return (true);
 		} else if (blockContext.offloadCondition == Names.REMINDERS_MANDATORY_TARGETONLY) {
-			if (blockContext.notYetOffloaded.size() == 0) {
+			//unlike the earlier version, now you only need to create one reminder,
+			//even if there are more targets than that
+			
+			//if (blockContext.notYetOffloaded.size() == 0) {
+			if (blockContext.notYetOffloaded.size() < blockContext.nTargets) {
 				return (true);
 			} else {
 				return (false);
 			}
-		} else { // reminders mandatory anycircle
-			if (blockContext.allOffloaded.size() >= blockContext.nTargets) {
+		} else if (blockContext.offloadCondition == Names.REMINDERS_MANDATORY_ANYCIRCLE) {
+			//see above...
+			
+			//if (blockContext.allOffloaded.size() >= blockContext.nTargets) {
+			if (blockContext.allOffloaded.size() > 0) {
 				return (true);
 			} else {
 				return (false);
 			}
+		} else if (blockContext.offloadCondition == Names.REMINDERS_PROSPECTIVE_MANDATORY) {
+			if (blockContext.prospectiveReminderSet) {
+				return (true);
+			} else {
+				return (false);
+			}
+		} else if (blockContext.offloadCondition == Names.REMINDERS_RETROSPECTIVE_MANDATORY) {
+			if (blockContext.retrospectiveReminderSet) {
+				return (true);
+			} else {
+				return (false);
+			}
+		} else {
+			return (false);
 		}
 	}
+	
+	public static void setProspectiveReminder() {
+		blockContext.prospectiveReminderSet = true;
+	}
+	
+	public static void setRetrospectiveReminder() {
+		blockContext.retrospectiveReminderSet = true;
+	}
+	
 
 	public static int getClickedCircle() {
 		return (blockContext.clickedCircle);

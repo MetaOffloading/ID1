@@ -129,4 +129,7 @@ public class IOtask1Block {
 	//here we collect a list of all circles that have been offloaded.
 	//we can use this for the mandatory offloading condition (any circles)
 	public ArrayList<Integer> allOffloaded = new ArrayList<Integer>();
+	
+	public boolean prospectiveReminderSet = false;
+	public boolean retrospectiveReminderSet = false;
 }
