@@ -59,7 +59,7 @@ public class SequenceHandler {
 	
 	public static void Next() {	
 		cb=Counterbalance.getFactorLevel("order");
-		
+
 		// move forward one step in whichever loop we are now in
 		sequencePosition.set(whichLoop, sequencePosition.get(whichLoop) + 1);
 
@@ -79,7 +79,8 @@ public class SequenceHandler {
 				IOtask1Block block1 = new IOtask1Block();
 				block1.nTargets = 0;
 				block1.nTrials = 1;
-				block1.offloadCondition = Names.REMINDERS_OPTIONAL;
+				block1.offloadCondition = Names.REMINDERS_NOTALLOWED;
+				block1.blockNum = -1;
 				block1.Run();
 				break;
 			case 4:
@@ -89,7 +90,8 @@ public class SequenceHandler {
 				IOtask1Block block2 = new IOtask1Block();
 				block2.nTargets = 1;
 				block2.nTrials = 1;
-				block2.offloadCondition = Names.REMINDERS_OPTIONAL;
+				block2.offloadCondition = Names.REMINDERS_NOTALLOWED;
+				block2.blockNum = -2;
 				block2.Run();
 				break;
 			case 6:
@@ -99,7 +101,8 @@ public class SequenceHandler {
 				IOtask1Block block3 = new IOtask1Block();
 				block3.nTargets = 3;
 				block3.nTrials = 1;
-				block3.offloadCondition = Names.REMINDERS_OPTIONAL;
+				block3.offloadCondition = Names.REMINDERS_NOTALLOWED;
+				block3.blockNum = -3;
 				block3.Run();
 				break;
 			
@@ -108,7 +111,7 @@ public class SequenceHandler {
 			/*************/
 				
 			case 8:				
-				switch(SessionInfo.sequence[cb][1]) {
+				switch(SessionInfo.sequence[cb][0]) {
 				case Names.REMINDERS_NOTALLOWED:
 					i=4;
 					break;
@@ -130,17 +133,23 @@ public class SequenceHandler {
 				IOtask1Block block4 = new IOtask1Block();
 				block4.nTargets = 3;
 				block4.nTrials = 1;
-				block4.offloadCondition = SessionInfo.sequence[cb][1];
+				block4.offloadCondition = SessionInfo.sequence[cb][0];
+				block4.blockNum = -4;
 				block4.Run();
 				break;
 			case 10:
 				ClickPage.Run(Instructions.Get(9), "Next");
 				break;
 			case 11:
+				ProgressBar.Initialise();
+				ProgressBar.Show();
+				ProgressBar.SetProgress(1, 8);
+				
 				IOtask1Block block5 = new IOtask1Block();
 				block5.nTargets = 3;
 				block5.nTrials = 5;
-				block5.offloadCondition = SessionInfo.sequence[cb][1];
+				block5.offloadCondition = SessionInfo.sequence[cb][0];
+				block5.blockNum = 1;
 				block5.Run();
 				break;
 				
@@ -149,7 +158,9 @@ public class SequenceHandler {
 				/*************/
 				
 			case 12:
-				switch(SessionInfo.sequence[cb][2]) {
+				ProgressBar.SetProgress(2, 8);
+				
+				switch(SessionInfo.sequence[cb][1]) {
 				case Names.REMINDERS_NOTALLOWED:
 					i=8;
 					break;
@@ -171,20 +182,135 @@ public class SequenceHandler {
 				IOtask1Block block6 = new IOtask1Block();
 				block6.nTargets = 3;
 				block6.nTrials = 1;
-				block6.offloadCondition = SessionInfo.sequence[cb][2];
+				block6.offloadCondition = SessionInfo.sequence[cb][1];
+				block6.blockNum = -5;
 				block6.Run();
 				break;
 			case 14:
 				ClickPage.Run(Instructions.Get(9), "Next");
 				break;
 			case 15:
+				ProgressBar.SetProgress(3, 8);
+				
 				IOtask1Block block7 = new IOtask1Block();
 				block7.nTargets = 3;
 				block7.nTrials = 5;
-				block7.offloadCondition = SessionInfo.sequence[cb][2];
+				block7.offloadCondition = SessionInfo.sequence[cb][1];
+				block7.blockNum = 2;
 				block7.Run();
 				break;
 				
+				/*************/
+				/*CONDITION 3*/
+				/*************/
+				
+			case 16:
+				switch(SessionInfo.sequence[cb][2]) {
+				case Names.REMINDERS_NOTALLOWED:
+					i=8;
+					break;
+				case Names.REMINDERS_MANDATORY_ANYCIRCLE:
+					i=5;
+					break;
+				case Names.REMINDERS_PROSPECTIVE_MANDATORY:
+					i=6;
+					break;
+				case Names.REMINDERS_RETROSPECTIVE_MANDATORY:
+					i=7;
+					break;			
+				}
+				
+				ClickPage.Run(Instructions.Get(i), "Next");
+				
+				break;		
+			case 17:
+				ProgressBar.SetProgress(4, 8);
+				
+				IOtask1Block block8 = new IOtask1Block();
+				block8.nTargets = 3;
+				block8.nTrials = 1;
+				block8.offloadCondition = SessionInfo.sequence[cb][2];
+				block8.blockNum = -6;
+				block8.Run();
+				break;
+			case 18:
+				ClickPage.Run(Instructions.Get(9), "Next");
+				break;
+			case 19:
+				ProgressBar.SetProgress(5, 8);
+				
+				IOtask1Block block9 = new IOtask1Block();
+				block9.nTargets = 3;
+				block9.nTrials = 5;
+				block9.offloadCondition = SessionInfo.sequence[cb][2];
+				block9.blockNum = 3;
+				block9.Run();
+				break;
+			
+				/*************/
+				/*CONDITION 4*/
+				/*************/
+				
+			case 20:
+				switch(SessionInfo.sequence[cb][3]) {
+				case Names.REMINDERS_NOTALLOWED:
+					i=8;
+					break;
+				case Names.REMINDERS_MANDATORY_ANYCIRCLE:
+					i=5;
+					break;
+				case Names.REMINDERS_PROSPECTIVE_MANDATORY:
+					i=6;
+					break;
+				case Names.REMINDERS_RETROSPECTIVE_MANDATORY:
+					i=7;
+					break;			
+				}
+				
+				ClickPage.Run(Instructions.Get(i), "Next");
+				
+				break;		
+			case 21:
+				ProgressBar.SetProgress(6, 8);
+				
+				IOtask1Block block10 = new IOtask1Block();
+				block10.nTargets = 3;
+				block10.nTrials = 1;
+				block10.offloadCondition = SessionInfo.sequence[cb][3];
+				block10.blockNum = -7;
+				block10.Run();
+				break;
+			case 22:
+				ClickPage.Run(Instructions.Get(9), "Next");
+				break;
+			case 23:
+				ProgressBar.SetProgress(7, 8);
+				
+				IOtask1Block block11 = new IOtask1Block();
+				block11.nTargets = 3;
+				block11.nTrials = 5;
+				block11.offloadCondition = SessionInfo.sequence[cb][3];
+				block11.blockNum = 4;
+				block11.Run();
+				break;
+			case 24:
+				ProgressBar.SetProgress(8, 8);
+				
+				// log data and check that it saves
+				String data = TimeStamp.Now() + ",";
+				data = data + SessionInfo.participantID + ",";
+				data = data + SessionInfo.gender + ",";
+				data = data + SessionInfo.age + ",";
+				data = data + Counterbalance.getFactorLevel("order");
+
+				PHP.UpdateStatus("finished");
+				PHP.logData("finish", data, true);
+				break;
+			case 25:
+				ProgressBar.Hide();
+				
+				ClickPage.Run(Instructions.Get(10), "nobutton");
+				break;	
 			}
 			break;
 

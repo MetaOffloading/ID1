@@ -64,8 +64,9 @@ public class Instructions {
 		case 6:
 			i="In the next part of the experiment we would like you to practise a strategy that can "
 					+ "help you to remember the special circles. You can double-click on any of the "
-					+ "circles which will make them turn blue. This will help you remember which circles "
-					+ "should be dragged to the left, top, or right, instead of the bottom of the box.<br><br> " 
+					+ "circles which will make them turn blue. So if you double-click on the special circles "
+					+ "at the beginning, this will help you remember which ones they are. This will make it easier "
+					+ "to remember which ones to drag to the left, top, or right, instead of the bottom of the box.<br><br> " 
 					+ "Please, click below to continue and use this strategy in the task. ";
 			break;
 		case 7:
@@ -73,8 +74,9 @@ public class Instructions {
 					+ "help you to remember the special circles. There will be a button above "
 					+ "the box saying 'Reminders'. You can click this button to open a window "
 					+ "where you can type in any text to help you remember the special circles. "
-					+ "Each time you click this button, you will be able to see all of the text "
-					+ "that you have previously typed in.<br><br> " 
+					+ "So you can click this button at the beginning and type in any reminders that "
+					+ "might help you later on. You can see these reminders any time by clicking the button "
+					+ "again.<br><br> " 
 					+ "Please, click below to continue and use this strategy in the task. ";
 			break;
 		case 8:
@@ -86,6 +88,11 @@ public class Instructions {
 			i="Now you will do the task for real. Please continue doing the task as you did "
 					+ "in the practice trial just now.";
 			break;
+		case 10:
+			i = "You have now completed the experiment. Thank you for taking part.<br><br>"
+					+ "Please click on the link below to receive your payment:<br><br>"
+					+ "<b><a href=\"https://app.prolific.co/submissions/complete?cc=\">"
+					+ "CLICK HERE</a></b>";
 		}
 
 		return(i);	

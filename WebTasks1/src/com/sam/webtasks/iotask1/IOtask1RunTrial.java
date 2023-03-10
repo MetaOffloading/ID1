@@ -416,6 +416,8 @@ public class IOtask1RunTrial {
 							}
 							
 							Window.alert(alertText);
+							
+							IOtask1BlockContext.setExitFlag(0);
 
 						}
 					}
