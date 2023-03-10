@@ -55,7 +55,11 @@ import com.sam.webtasks.iotask2.IOtask2InitialiseTrial;
 import com.sam.webtasks.iotask2.IOtask2PreTrial;
 
 public class SequenceHandler {
+	static int cb, i=0;
+	
 	public static void Next() {	
+		cb=Counterbalance.getFactorLevel("order");
+		
 		// move forward one step in whichever loop we are now in
 		sequencePosition.set(whichLoop, sequencePosition.get(whichLoop) + 1);
 
@@ -66,38 +70,121 @@ public class SequenceHandler {
 			 * The code here defines the main sequence of events in the experiment *
 			 **********************************************************************/
 			case 1:
-				ClickPage.Run("Optional reminders", "Next");
+				ClickPage.Run(Instructions.Get(0), "Next");
 				break;
 			case 2:
+				ClickPage.Run(Instructions.Get(1), "Next");
+				break;
+			case 3:
 				IOtask1Block block1 = new IOtask1Block();
-				block1.nTargets = 3;
+				block1.nTargets = 0;
 				block1.nTrials = 1;
 				block1.offloadCondition = Names.REMINDERS_OPTIONAL;
 				block1.Run();
 				break;
-			case 3:
-				ClickPage.Run("Mandatory prospective reminder", "Next");
-				break;
 			case 4:
-				IOtask1Block block2 = new IOtask1Block();
-				block2.nTargets = 3;
-				block2.nTrials = 1;
-				block2.offloadCondition = Names.REMINDERS_PROSPECTIVE_MANDATORY;
-				block2.Run();
+				ClickPage.Run(Instructions.Get(2), "Next");
 				break;
 			case 5:
-				ClickPage.Run("Mandatory retrospective reminder", "Next");
+				IOtask1Block block2 = new IOtask1Block();
+				block2.nTargets = 1;
+				block2.nTrials = 1;
+				block2.offloadCondition = Names.REMINDERS_OPTIONAL;
+				block2.Run();
 				break;
 			case 6:
+				ClickPage.Run(Instructions.Get(3), "Next");
+				break;
+			case 7:
 				IOtask1Block block3 = new IOtask1Block();
 				block3.nTargets = 3;
 				block3.nTrials = 1;
-				block3.offloadCondition = Names.REMINDERS_RETROSPECTIVE_MANDATORY;
+				block3.offloadCondition = Names.REMINDERS_OPTIONAL;
 				block3.Run();
 				break;
-			case 7:
-				Finish.Run();
+			
+			/*************/
+			/*CONDITION 1*/
+			/*************/
+				
+			case 8:				
+				switch(SessionInfo.sequence[cb][1]) {
+				case Names.REMINDERS_NOTALLOWED:
+					i=4;
+					break;
+				case Names.REMINDERS_MANDATORY_ANYCIRCLE:
+					i=5;
+					break;
+				case Names.REMINDERS_PROSPECTIVE_MANDATORY:
+					i=6;
+					break;
+				case Names.REMINDERS_RETROSPECTIVE_MANDATORY:
+					i=7;
+					break;			
+				}
+				
+				ClickPage.Run(Instructions.Get(i), "Next");
+				
 				break;
+			case 9:
+				IOtask1Block block4 = new IOtask1Block();
+				block4.nTargets = 3;
+				block4.nTrials = 1;
+				block4.offloadCondition = SessionInfo.sequence[cb][1];
+				block4.Run();
+				break;
+			case 10:
+				ClickPage.Run(Instructions.Get(9), "Next");
+				break;
+			case 11:
+				IOtask1Block block5 = new IOtask1Block();
+				block5.nTargets = 3;
+				block5.nTrials = 5;
+				block5.offloadCondition = SessionInfo.sequence[cb][1];
+				block5.Run();
+				break;
+				
+				/*************/
+				/*CONDITION 2*/
+				/*************/
+				
+			case 12:
+				switch(SessionInfo.sequence[cb][2]) {
+				case Names.REMINDERS_NOTALLOWED:
+					i=8;
+					break;
+				case Names.REMINDERS_MANDATORY_ANYCIRCLE:
+					i=5;
+					break;
+				case Names.REMINDERS_PROSPECTIVE_MANDATORY:
+					i=6;
+					break;
+				case Names.REMINDERS_RETROSPECTIVE_MANDATORY:
+					i=7;
+					break;			
+				}
+				
+				ClickPage.Run(Instructions.Get(i), "Next");
+				
+				break;		
+			case 13:
+				IOtask1Block block6 = new IOtask1Block();
+				block6.nTargets = 3;
+				block6.nTrials = 1;
+				block6.offloadCondition = SessionInfo.sequence[cb][2];
+				block6.Run();
+				break;
+			case 14:
+				ClickPage.Run(Instructions.Get(9), "Next");
+				break;
+			case 15:
+				IOtask1Block block7 = new IOtask1Block();
+				block7.nTargets = 3;
+				block7.nTrials = 5;
+				block7.offloadCondition = SessionInfo.sequence[cb][2];
+				block7.Run();
+				break;
+				
 			}
 			break;
 

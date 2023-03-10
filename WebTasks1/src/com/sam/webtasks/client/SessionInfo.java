@@ -6,6 +6,35 @@ public class SessionInfo {
 	/*******************************************************/
 	/* edit the settings below to configure the experiment */
 	/*******************************************************/
+	static int C1 = Names.REMINDERS_NOTALLOWED;
+	static int C2 = Names.REMINDERS_MANDATORY_ANYCIRCLE;
+	static int C3 = Names.REMINDERS_PROSPECTIVE_MANDATORY;
+	static int C4 = Names.REMINDERS_RETROSPECTIVE_MANDATORY;
+	
+	public static int[][] sequence = { {C1, C2, C3, C4}, 
+			 {C1, C2, C4, C3},
+			 {C1, C3, C2, C4},
+			 {C1, C3, C4, C2},
+			 {C1, C4, C2, C3},
+			 {C1, C4, C3, C2},
+			 {C2, C1, C3, C4},
+			 {C2, C1, C4, C3},
+			 {C2, C3, C1, C4},
+			 {C2, C3, C4, C1},
+			 {C2, C4, C1, C3},
+			 {C2, C4, C3, C1},
+			 {C3, C1, C2, C4},
+			 {C3, C1, C4, C2},
+			 {C3, C2, C1, C4},
+			 {C3, C2, C4, C1},
+			 {C3, C4, C1, C2},
+			 {C3, C4, C2, C1},
+			 {C4, C1, C2, C3},
+			 {C4, C1, C3, C2},
+			 {C4, C2, C1, C3},
+			 {C4, C2, C3, C1},
+			 {C4, C3, C1, C2},
+			 {C4, C3, C2, C1} };
 		
 	//are we just testing locally? set this to true if so and it won't try to log data to the database
 	public static boolean localTesting=false;
@@ -39,9 +68,9 @@ public class SessionInfo {
 	//if you want to specify the level of any of those factors, set it with specifiedLevels. otherwise set to -1
 	//e.g. specifiedLevels = {-1, 2, -1}; would randomise factors 1 and 3, and set the second factor to level 2
 	//NB levels range from 0 to (maximum - 1)
-	public static String[] counterbalanceFactors = {};
-	public static int[] counterbalanceLevels = {};
-	public static int[] specifiedLevels = {};
+	public static String[] counterbalanceFactors = {"order"};
+	public static int[] counterbalanceLevels = {24};
+	public static int[] specifiedLevels = {-1};
 	
 	/*************************************************/
     /* no need to edit the settings below this point */

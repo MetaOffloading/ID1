@@ -10,7 +10,81 @@ public class Instructions {
 		 
 		switch(index) {
 		case 0:
-			i="Here are some instructions";
+			i="Thank you for taking part in this experiment. <br>"                        
+					  + "Please close any programs that could cause distraction (e.g. email clients) and " 
+					  + "maximise the size of this window.<br><br> "
+					  + "This experiment will take approximately 30 minutes. Please only continue when you think "
+					  + "you will be free from distractions for the next 30 minutes.<br><br> "
+					  + "You may withdraw at any time without penalty, simply by closing your browser window. "
+					  + "If you are having difficulty running the experiment we recommend that you try "
+					  + "using Google Chrome. Unfortunately the experiment may not be compatible with all " 
+					  + "systems and we apologise if you are not able to take part.<br><br> " 
+					  + "Click below to continue.";
+			break;
+		case 1:
+			i="In this experiment you will have a simple task to do.<br><br>"
+                  + "You will see several yellow circles inside a box. "
+                  + "Inside each circle will be a number. <br><br>"
+                  + "Using your mouse, you can click on these circles to "
+                  + "move them around. Your task is to drag them to the bottom "
+                  + "of the box in sequence. "
+                  + "Please start by dragging 1 all the way to the bottom. "
+                  + "This will make it disappear. Then drag 2 to the bottom, then 3, "
+                  + "and so on.<br><br>"
+                  + "Click below to practise the task.";
+			break;
+		case 2:
+			i="Now you will continue the same task, but sometimes there will be something else to "
+					+ "do.<br><br>As well as dragging each circle in turn to the "
+					+ "bottom of the screen, you will be instructed to drag one or more "
+					+ "of the circles to another part of the box. For "
+					+ "instance, you might be told that you should drag number 5 "
+					+ "to the left of the box instead of "
+					+ "the bottom.<br><br>You will still be able to drag any "
+					+ "circle to the bottom of the box, but you should try to "
+					+ "remember to drag these special circles to the instructed "
+					+ "location. ";
+			break;
+		case 3:
+			i="Now you will do the task again, but this time there will be three special "
+                  + "circles to remember.";
+			break;
+		case 4:
+			i="Click below to practice the task one more time before starting the actual experiment.";
+			break;
+		case 5:
+			i="In the next part of the experiment we would like you to practise a strategy that can "
+					+ "help you to remember the special circles. You can drag the special circles near to the "
+					+ "instructed edge of the box to help you remember.<br><br> " 
+					+ "For example, if you had to remember to drag 5 to the left of the box, "
+					+ "you could drag it near to there at the beginning, before you drag the 1. " 
+					+ "Then when you eventually got to 5, its location would remind you "
+					+ "what to do. Please, click below to continue and use this strategy in the task. ";
+			break;
+		case 6:
+			i="In the next part of the experiment we would like you to practise a strategy that can "
+					+ "help you to remember the special circles. You can double-click on any of the "
+					+ "circles which will make them turn blue. This will help you remember which circles "
+					+ "should be dragged to the left, top, or right, instead of the bottom of the box.<br><br> " 
+					+ "Please, click below to continue and use this strategy in the task. ";
+			break;
+		case 7:
+			i="In the next part of the experiment we would like you to practise a strategy that can "
+					+ "help you to remember the special circles. There will be a button above "
+					+ "the box saying 'Reminders'. You can click this button to open a window "
+					+ "where you can type in any text to help you remember the special circles. "
+					+ "Each time you click this button, you will be able to see all of the text "
+					+ "that you have previously typed in.<br><br> " 
+					+ "Please, click below to continue and use this strategy in the task. ";
+			break;
+		case 8:
+			i="In the next part of the experiment we would like you to practise doing the task without "
+					+ "setting reminders, so you have to remember the special circles yourself.";
+			break;
+
+		case 9:
+			i="Now you will do the task for real. Please continue doing the task as you did "
+					+ "in the practice trial just now.";
 			break;
 		}
 
@@ -52,7 +126,7 @@ public class Instructions {
                 + "We aim to publish the results of this project in scientific journals and book chapters. Copies of the "
                 + "results can either be obtained directly from the scientific journals' websites or from us.<br><br>"
                 + "Should you wish to raise a complaint, please contact the Principal Investigator of this project, "
-                + "Dr Sam Gilbert (<a href=\"mailto:sam.gilbert@ucl.ac.uk\">sam.gilbert@ucl.ac.uk</a>). However, "
+                + "Professor Sam Gilbert (<a href=\"mailto:sam.gilbert@ucl.ac.uk\">sam.gilbert@ucl.ac.uk</a>). However, "
                 + "if you feel your complaint has not been handled to your satisfaction, please be aware that you can "
                 + "also contact the Chair of the UCL Research Ethics Committee (<a href=\"mailto:ethics@ucl.ac.uk\">ethics@ucl.ac.uk</a>).");
     }
