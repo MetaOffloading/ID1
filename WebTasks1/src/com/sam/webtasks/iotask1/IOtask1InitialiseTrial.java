@@ -15,6 +15,8 @@ public class IOtask1InitialiseTrial {
 		//reset the list of offloaded circles, so that offloading on one trial is not counted towards the next
 		block.notYetOffloaded.clear();
 		block.allOffloaded.clear();
+		block.prospectiveReminderSet=false;
+		block.retrospectiveReminderSet=false;
 		 
 		//reset the targetCircles
 		block.targetCircles[0] = 0;
