@@ -49,6 +49,10 @@ public class Instructions {
 			i="Now you will do the task again, but this time there will be three special "
                   + "circles to remember.";
 			break;
+		case 31:
+			i="From now on, you will occasionally be asked to answer arithmetic questions while you do the task.<br><br>"
+			      + "If you see a question in a pop-up box, please type in the answer, click OK, then continue with the task.";
+			break;
 		case 4:
 			i="Click below to practice the task one more time before starting the actual experiment.";
 			break;

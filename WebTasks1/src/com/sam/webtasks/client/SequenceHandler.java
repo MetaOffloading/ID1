@@ -105,12 +105,23 @@ public class SequenceHandler {
 				block3.blockNum = -3;
 				block3.Run();
 				break;
+			case 8:
+				ClickPage.Run(Instructions.Get(31),  "Next");
+				break;
+			case 9:
+				IOtask1Block block31 = new IOtask1Block();
+				block31.nTargets = 3;
+				block31.nTrials = 1;
+				block31.offloadCondition = Names.REMINDERS_NOTALLOWED;
+				block31.blockNum = -31;
+				block31.askArithmetic = true;
+				block31.Run();
+				break;
 			
 			/*************/
 			/*CONDITION 1*/
-			/*************/
-				
-			case 8:				
+			/*************/			
+			case 10:				
 				switch(SessionInfo.sequence[cb][0]) {
 				case Names.REMINDERS_NOTALLOWED:
 					i=4;
@@ -129,18 +140,19 @@ public class SequenceHandler {
 				ClickPage.Run(Instructions.Get(i), "Next");
 				
 				break;
-			case 9:
+			case 11:
 				IOtask1Block block4 = new IOtask1Block();
 				block4.nTargets = 3;
 				block4.nTrials = 1;
 				block4.offloadCondition = SessionInfo.sequence[cb][0];
 				block4.blockNum = -4;
+				block4.askArithmetic = true;
 				block4.Run();
 				break;
-			case 10:
+			case 12:
 				ClickPage.Run(Instructions.Get(9), "Next");
 				break;
-			case 11:
+			case 13:
 				ProgressBar.Initialise();
 				ProgressBar.Show();
 				ProgressBar.SetProgress(1, 8);
@@ -150,6 +162,7 @@ public class SequenceHandler {
 				block5.nTrials = 5;
 				block5.offloadCondition = SessionInfo.sequence[cb][0];
 				block5.blockNum = 1;
+				block5.askArithmetic = true;
 				block5.Run();
 				break;
 				
@@ -157,7 +170,7 @@ public class SequenceHandler {
 				/*CONDITION 2*/
 				/*************/
 				
-			case 12:
+			case 14:
 				ProgressBar.SetProgress(2, 8);
 				
 				switch(SessionInfo.sequence[cb][1]) {
@@ -178,18 +191,19 @@ public class SequenceHandler {
 				ClickPage.Run(Instructions.Get(i), "Next");
 				
 				break;		
-			case 13:
+			case 15:
 				IOtask1Block block6 = new IOtask1Block();
 				block6.nTargets = 3;
 				block6.nTrials = 1;
 				block6.offloadCondition = SessionInfo.sequence[cb][1];
 				block6.blockNum = -5;
+				block6.askArithmetic = true;
 				block6.Run();
 				break;
-			case 14:
+			case 16:
 				ClickPage.Run(Instructions.Get(9), "Next");
 				break;
-			case 15:
+			case 17:
 				ProgressBar.SetProgress(3, 8);
 				
 				IOtask1Block block7 = new IOtask1Block();
@@ -197,6 +211,7 @@ public class SequenceHandler {
 				block7.nTrials = 5;
 				block7.offloadCondition = SessionInfo.sequence[cb][1];
 				block7.blockNum = 2;
+				block7.askArithmetic = true;
 				block7.Run();
 				break;
 				
@@ -204,7 +219,7 @@ public class SequenceHandler {
 				/*CONDITION 3*/
 				/*************/
 				
-			case 16:
+			case 18:
 				switch(SessionInfo.sequence[cb][2]) {
 				case Names.REMINDERS_NOTALLOWED:
 					i=8;
@@ -223,7 +238,7 @@ public class SequenceHandler {
 				ClickPage.Run(Instructions.Get(i), "Next");
 				
 				break;		
-			case 17:
+			case 19:
 				ProgressBar.SetProgress(4, 8);
 				
 				IOtask1Block block8 = new IOtask1Block();
@@ -231,12 +246,13 @@ public class SequenceHandler {
 				block8.nTrials = 1;
 				block8.offloadCondition = SessionInfo.sequence[cb][2];
 				block8.blockNum = -6;
+				block8.askArithmetic = true;
 				block8.Run();
 				break;
-			case 18:
+			case 20:
 				ClickPage.Run(Instructions.Get(9), "Next");
 				break;
-			case 19:
+			case 21:
 				ProgressBar.SetProgress(5, 8);
 				
 				IOtask1Block block9 = new IOtask1Block();
@@ -244,6 +260,7 @@ public class SequenceHandler {
 				block9.nTrials = 5;
 				block9.offloadCondition = SessionInfo.sequence[cb][2];
 				block9.blockNum = 3;
+				block9.askArithmetic = true;
 				block9.Run();
 				break;
 			
@@ -251,7 +268,7 @@ public class SequenceHandler {
 				/*CONDITION 4*/
 				/*************/
 				
-			case 20:
+			case 22:
 				switch(SessionInfo.sequence[cb][3]) {
 				case Names.REMINDERS_NOTALLOWED:
 					i=8;
@@ -270,7 +287,7 @@ public class SequenceHandler {
 				ClickPage.Run(Instructions.Get(i), "Next");
 				
 				break;		
-			case 21:
+			case 23:
 				ProgressBar.SetProgress(6, 8);
 				
 				IOtask1Block block10 = new IOtask1Block();
@@ -278,12 +295,13 @@ public class SequenceHandler {
 				block10.nTrials = 1;
 				block10.offloadCondition = SessionInfo.sequence[cb][3];
 				block10.blockNum = -7;
+				block10.askArithmetic = true;
 				block10.Run();
 				break;
-			case 22:
+			case 24:
 				ClickPage.Run(Instructions.Get(9), "Next");
 				break;
-			case 23:
+			case 25:
 				ProgressBar.SetProgress(7, 8);
 				
 				IOtask1Block block11 = new IOtask1Block();
@@ -291,9 +309,10 @@ public class SequenceHandler {
 				block11.nTrials = 5;
 				block11.offloadCondition = SessionInfo.sequence[cb][3];
 				block11.blockNum = 4;
+				block11.askArithmetic = true;
 				block11.Run();
 				break;
-			case 24:
+			case 26:
 				ProgressBar.SetProgress(8, 8);
 				
 				// log data and check that it saves
@@ -306,7 +325,7 @@ public class SequenceHandler {
 				PHP.UpdateStatus("finished");
 				PHP.logData("finish", data, true);
 				break;
-			case 25:
+			case 27:
 				ProgressBar.Hide();
 				
 				ClickPage.Run(Instructions.Get(10), "nobutton");
