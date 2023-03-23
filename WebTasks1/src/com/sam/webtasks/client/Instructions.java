@@ -87,7 +87,15 @@ public class Instructions {
 			i="In the next part of the experiment we would like you to practise doing the task without "
 					+ "setting reminders, so you have to remember the special circles yourself.";
 			break;
-
+		case 81:
+        	i="Now that you have had some practice, we would like you to tell us "
+                    + "how <b>confident</b> you are that you can accurately perform the task "
+                    + "<b>when you do it exactly as you practised just now</b>.<br><br>"
+                    + "Please use the scale below to indicate what percentage of "
+                    + "the special circles you can correctly drag to the instructed side of the square, on average. 100% "
+                    + "would mean that you always get every single one correct. 0% would mean that you can never "
+                    + "get any of them correct.";
+            break;
 		case 9:
 			i="Now you will do the task for real. Please continue doing the task as you did "
 					+ "in the practice trial just now.";
