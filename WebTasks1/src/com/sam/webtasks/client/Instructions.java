@@ -101,10 +101,9 @@ public class Instructions {
 					+ "in the practice trial just now.";
 			break;
 		case 10:
-			i = "You have now completed the experiment. Thank you for taking part.<br><br>"
-					+ "Please click on the link below to receive your payment:<br><br>"
+			i = "You have now completed this part of the experiment.<br><br>"
 					+ "<b><a href=\"https://app.prolific.co/submissions/complete?cc=\">"
-					+ "CLICK HERE</a></b>";
+					+ "CLICK HERE</a></b> to continue.";
 		}
 
 		return(i);	
