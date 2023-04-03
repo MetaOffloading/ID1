@@ -500,7 +500,7 @@ public class IOtask1RunTrial {
 								Date questionAnswered = new Date();
 								int arithmeticRT = (int) (questionAnswered.getTime() - questionAsked.getTime());
 
-								String data = number1 + "," + operation + "," + number2 + ",";
+								String data = IOtask1BlockContext.getBlockNum() + "," + number1 + "," + operation + "," + number2 + ",";
 								data = data + r + "," + result + "," + arithmeticRT + "," + (r == result);
 
 								PHP.logData("arithmeticQ", data, false);
