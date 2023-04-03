@@ -51,8 +51,9 @@ public class Initialise {
 		if (SessionInfo.experimentType == Names.EXPERIMENT_PROLIFIC) {
 			RootPanel.get().add(new Label("initalising..."));
 			
-			//get session key from query line
-			SessionInfo.sessionKey = Window.Location.getParameter("SESSION_ID");
+			//get session key from query line: we don't do this any more because it can lead to the data being merged after a reload
+			//SessionInfo.sessionKey = Window.Location.getParameter("SESSION_ID");
+			
 			//SessionInfo.prolificExperimentCode = Window.Location.getParameter("STUDY_ID");
 			SessionInfo.participantID = Window.Location.getParameter("PROLIFIC_PID");
 			
@@ -60,9 +61,9 @@ public class Initialise {
 				SessionInfo.participantID = Window.prompt("What is your Prolific ID?",  "");
 			}
 			
-			if (SessionInfo.sessionKey == null) {
+			//if (SessionInfo.sessionKey == null) {
 				SessionInfo.sessionKey = SessionKey.Get();
-			}
+			//}
 			
 			/*if (SessionInfo.prolificExperimentCode == null) {
 				SessionInfo.prolificExperimentCode = SessionInfo.experimentCode;
