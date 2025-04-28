@@ -18,17 +18,11 @@
 //SequenceHandler.SetLoop(0,false) will switch to the main loop,
 //continuing from where we left off.
 
-//TODO:
-//scroll
-//data output
-//resume where you left off
-
 package com.sam.webtasks.client;
 
 import java.util.ArrayList;
 
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.sam.webtasks.basictools.CheckIdExists;
 import com.sam.webtasks.basictools.CheckScreenSize;
@@ -44,22 +38,14 @@ import com.sam.webtasks.basictools.Slider;
 import com.sam.webtasks.basictools.TimeStamp;
 import com.sam.webtasks.iotask1.IOtask1Block;
 import com.sam.webtasks.iotask1.IOtask1BlockContext;
+import com.sam.webtasks.iotask1.IOtask1DisplayParams;
 import com.sam.webtasks.iotask1.IOtask1InitialiseTrial;
 import com.sam.webtasks.iotask1.IOtask1RunTrial;
-import com.sam.webtasks.iotask2.IOtask2Block;
-import com.sam.webtasks.iotask2.IOtask2BlockContext;
-import com.sam.webtasks.iotask2.IOtask2RunTrial;
-import com.sam.webtasks.perceptualTask.PerceptBlock;
-import com.sam.webtasks.timeBasedOffloading.TimeBlock;
-import com.sam.webtasks.iotask2.IOtask2InitialiseTrial;
-import com.sam.webtasks.iotask2.IOtask2PreTrial;
+
+
 
 public class SequenceHandler {
-	static int cb, i=0;
-	
 	public static void Next() {	
-		cb=Counterbalance.getFactorLevel("order");
-
 		// move forward one step in whichever loop we are now in
 		sequencePosition.set(whichLoop, sequencePosition.get(whichLoop) + 1);
 
@@ -68,294 +54,153 @@ public class SequenceHandler {
 			switch (sequencePosition.get(0)) {
 			/***********************************************************************
 			 * The code here defines the main sequence of events in the experiment *
-			 **********************************************************************/
+			 ********************************************************************/			
 			case 1:
 				ClickPage.Run(Instructions.Get(0), "Next");
 				break;
 			case 2:
-				ClickPage.Run(Instructions.Get(1), "Next");
-				break;
-			case 3:
+				//practice 1: 10 circles, no targets
 				IOtask1Block block1 = new IOtask1Block();
-				block1.nTargets = 0;
+				block1.blockNum = 1;
 				block1.nTrials = 1;
-				block1.offloadCondition = Names.REMINDERS_NOTALLOWED;
-				block1.blockNum = -1;
+				block1.nTargets = 0;
+				block1.askArithmetic = false;
+				block1.offloadCondition = Names.REMINDERS_NOTALLOWED;		
 				block1.Run();
 				break;
+			case 3:
+				ClickPage.Run(Instructions.Get(1), "Next");
+				break;
 			case 4:
-				ClickPage.Run(Instructions.Get(2), "Next");
+				//practice 2: 10 circles, 1 target
+				IOtask1Block block2 = new IOtask1Block();
+				block2.blockNum = 2;
+				block2.nTrials = 1;
+				block2.nTargets = 1;
+				block2.askArithmetic = false;
+				block2.offloadCondition = Names.REMINDERS_NOTALLOWED;		
+				block2.Run();				
 				break;
 			case 5:
-				IOtask1Block block2 = new IOtask1Block();
-				block2.nTargets = 1;
-				block2.nTrials = 1;
-				block2.offloadCondition = Names.REMINDERS_NOTALLOWED;
-				block2.blockNum = -2;
-				block2.Run();
+				ClickPage.Run(Instructions.Get(2),  "Next");
 				break;
 			case 6:
-				ClickPage.Run(Instructions.Get(3), "Next");
+				//practice 3: 10 circles, 2 targets
+				IOtask1Block block3 = new IOtask1Block();
+				block3.blockNum = 3;
+				block3.nTrials = 1;
+				block3.nTargets = 2;
+				block3.askArithmetic = false;
+				block3.offloadCondition = Names.REMINDERS_NOTALLOWED;		
+				block3.Run();				
 				break;
 			case 7:
-				IOtask1Block block3 = new IOtask1Block();
-				block3.nTargets = 3;
-				block3.nTrials = 1;
-				block3.offloadCondition = Names.REMINDERS_NOTALLOWED;
-				block3.blockNum = -3;
-				block3.Run();
+				ClickPage.Run(Instructions.Get(3), "Next");
 				break;
 			case 8:
-				ClickPage.Run(Instructions.Get(31),  "Next");
+				//practice 3: 10 circles, 3 targets
+				IOtask1Block block4 = new IOtask1Block();
+				block4.blockNum = 4;
+				block4.nTrials = 1;
+				block4.nTargets = 3;
+				block4.askArithmetic = false;
+				block4.offloadCondition = Names.REMINDERS_NOTALLOWED;		
+				block4.Run();				
 				break;
 			case 9:
-				IOtask1Block block31 = new IOtask1Block();
-				block31.nTargets = 3;
-				block31.nTrials = 1;
-				block31.offloadCondition = Names.REMINDERS_NOTALLOWED;
-				block31.blockNum = -31;
-				block31.askArithmetic = true;
-				block31.Run();
+				ClickPage.Run(Instructions.Get(5), "Next");
 				break;
-			
-			/*************/
-			/*CONDITION 1*/
-			/*************/			
-			case 10:				
-				switch(SessionInfo.sequence[cb][0]) {
-				case Names.REMINDERS_NOTALLOWED:
-					i=4;
-					break;
-				case Names.REMINDERS_MANDATORY_ANYCIRCLE:
-					i=5;
-					break;
-				case Names.REMINDERS_PROSPECTIVE_MANDATORY:
-					i=6;
-					break;
-				case Names.REMINDERS_RETROSPECTIVE_MANDATORY:
-					i=7;
-					break;			
-				}
-				
-				ClickPage.Run(Instructions.Get(i), "Next");
-				
-				break;
-			case 11:
-				IOtask1Block block4 = new IOtask1Block();
-				block4.nTargets = 3;
-				block4.nTrials = 1;
-				block4.offloadCondition = SessionInfo.sequence[cb][0];
-				block4.blockNum = -4;
-				block4.askArithmetic = true;
-				block4.Run();
-				break;
-			case 12:
-				Slider.Run(Instructions.Get(81), "0%", "100%");
-				break;
-			case 13:
-				PHP.logData("slider" + SessionInfo.sequence[cb][0], ""+Slider.getSliderValue(), true);
-				break;
-			case 14:
-				ClickPage.Run(Instructions.Get(9), "Next");
-				break;
-			case 15:
-				ProgressBar.Initialise();
-				ProgressBar.Show();
-				ProgressBar.SetProgress(1, 8);
-				
-				IOtask1Block block5 = new IOtask1Block();
-				block5.nTargets = 3;
-				block5.nTrials = 5;
-				block5.offloadCondition = SessionInfo.sequence[cb][0];
-				block5.blockNum = 1;
-				block5.askArithmetic = true;
-				block5.Run();
-				break;
-				
-				/*************/
-				/*CONDITION 2*/
-				/*************/
-				
-			case 16:
-				ProgressBar.SetProgress(2, 8);
-				
-				switch(SessionInfo.sequence[cb][1]) {
-				case Names.REMINDERS_NOTALLOWED:
-					i=8;
-					break;
-				case Names.REMINDERS_MANDATORY_ANYCIRCLE:
-					i=5;
-					break;
-				case Names.REMINDERS_PROSPECTIVE_MANDATORY:
-					i=6;
-					break;
-				case Names.REMINDERS_RETROSPECTIVE_MANDATORY:
-					i=7;
-					break;			
-				}
-				
-				ClickPage.Run(Instructions.Get(i), "Next");
-				
-				break;		
-			case 17:
+			case 10:
+				//practice 5: 10 circles, 2 targets, optional reminders
 				IOtask1Block block6 = new IOtask1Block();
-				block6.nTargets = 3;
+				block6.blockNum = 6;
 				block6.nTrials = 1;
-				block6.offloadCondition = SessionInfo.sequence[cb][1];
-				block6.blockNum = -5;
-				block6.askArithmetic = true;
+				block6.nTargets = 2;
+				block6.askArithmetic = false;
+				block6.offloadCondition = Names.REMINDERS_OPTIONAL;	
 				block6.Run();
 				break;
-			case 18:
-				Slider.Run(Instructions.Get(81), "0%", "100%");
-				break;
-			case 19:
-				PHP.logData("slider" + SessionInfo.sequence[cb][1], ""+Slider.getSliderValue(), true);
-				break;
-			case 20:
-				ClickPage.Run(Instructions.Get(9), "Next");
-				break;
-			case 21:
-				ProgressBar.SetProgress(3, 8);
+			case 11:
+				//instructions phase 1
 				
+				//Window.alert("test");
+
+				if (Counterbalance.getFactorLevel("conditionOrder") == ExtraNames.OFFLOAD_SECOND){
+					ClickPage.Run(Instructions.Get(7), "Next");
+				}
+				if (Counterbalance.getFactorLevel("conditionOrder") == ExtraNames.OFFLOAD_FIRST){
+					ClickPage.Run(Instructions.Get(6), "Next");
+				}
+				
+				break;				
+			case 12:
+				//phase 1
 				IOtask1Block block7 = new IOtask1Block();
-				block7.nTargets = 3;
-				block7.nTrials = 5;
-				block7.offloadCondition = SessionInfo.sequence[cb][1];
-				block7.blockNum = 2;
-				block7.askArithmetic = true;
+				block7.blockNum = 7;
+				block7.nTrials = 9;
+				block7.targetList.add(1);
+				block7.targetList.add(2);
+				block7.targetList.add(3);
+				block7.targetList.add(1);
+				block7.targetList.add(2);
+				block7.targetList.add(3);
+				block7.targetList.add(1);
+				block7.targetList.add(2);
+				block7.targetList.add(3);				
+				block7.askArithmetic = false;
+				if (Counterbalance.getFactorLevel("conditionOrder") == ExtraNames.OFFLOAD_SECOND) {
+					block7.offloadCondition = Names.REMINDERS_NOTALLOWED;}
+				if (Counterbalance.getFactorLevel("conditionOrder") == ExtraNames.OFFLOAD_FIRST) {
+					block7.offloadCondition = Names.REMINDERS_OPTIONAL;}
 				block7.Run();
 				break;
-				
-				/*************/
-				/*CONDITION 3*/
-				/*************/
-				
-			case 22:
-				switch(SessionInfo.sequence[cb][2]) {
-				case Names.REMINDERS_NOTALLOWED:
-					i=8;
-					break;
-				case Names.REMINDERS_MANDATORY_ANYCIRCLE:
-					i=5;
-					break;
-				case Names.REMINDERS_PROSPECTIVE_MANDATORY:
-					i=6;
-					break;
-				case Names.REMINDERS_RETROSPECTIVE_MANDATORY:
-					i=7;
-					break;			
+			case 13:
+				//instructions phase 2
+				if (Counterbalance.getFactorLevel("conditionOrder") == ExtraNames.OFFLOAD_SECOND) {
+					ClickPage.Run(Instructions.Get(9), "Next");
 				}
 				
-				ClickPage.Run(Instructions.Get(i), "Next");
-				
-				break;		
-			case 23:
-				ProgressBar.SetProgress(4, 8);
-				
+				if (Counterbalance.getFactorLevel("conditionOrder") == ExtraNames.OFFLOAD_FIRST) {
+					ClickPage.Run(Instructions.Get(8), "Next");
+				}
+				break;
+			case 14:
+				//phase 2
 				IOtask1Block block8 = new IOtask1Block();
-				block8.nTargets = 3;
-				block8.nTrials = 1;
-				block8.offloadCondition = SessionInfo.sequence[cb][2];
-				block8.blockNum = -6;
+				block8.blockNum = 8;
+				block8.nTrials = 9;
+				block8.targetList.add(1);
+				block8.targetList.add(2);
+				block8.targetList.add(3);
+				block8.targetList.add(1);
+				block8.targetList.add(2);
+				block8.targetList.add(3);
+				block8.targetList.add(1);
+				block8.targetList.add(2);
+				block8.targetList.add(3);
 				block8.askArithmetic = true;
+				if (Counterbalance.getFactorLevel("conditionOrder") == ExtraNames.OFFLOAD_SECOND) {
+					block8.offloadCondition = Names.REMINDERS_OPTIONAL;}
+				if (Counterbalance.getFactorLevel("conditionOrder") == ExtraNames.OFFLOAD_FIRST) {
+					block8.offloadCondition = Names.REMINDERS_NOTALLOWED;}
 				block8.Run();
 				break;
-			case 24:
-				Slider.Run(Instructions.Get(81), "0%", "100%");
-				break;
-			case 25:
-				PHP.logData("slider" + SessionInfo.sequence[cb][2], ""+Slider.getSliderValue(), true);
-				break;
-			case 26:
-				ClickPage.Run(Instructions.Get(9), "Next");
-				break;
-			case 27:
-				ProgressBar.SetProgress(5, 8);
-				
-				IOtask1Block block9 = new IOtask1Block();
-				block9.nTargets = 3;
-				block9.nTrials = 5;
-				block9.offloadCondition = SessionInfo.sequence[cb][2];
-				block9.blockNum = 3;
-				block9.askArithmetic = true;
-				block9.Run();
-				break;
-			
-				/*************/
-				/*CONDITION 4*/
-				/*************/
-				
-			case 28:
-				switch(SessionInfo.sequence[cb][3]) {
-				case Names.REMINDERS_NOTALLOWED:
-					i=8;
-					break;
-				case Names.REMINDERS_MANDATORY_ANYCIRCLE:
-					i=5;
-					break;
-				case Names.REMINDERS_PROSPECTIVE_MANDATORY:
-					i=6;
-					break;
-				case Names.REMINDERS_RETROSPECTIVE_MANDATORY:
-					i=7;
-					break;			
-				}
-				
-				ClickPage.Run(Instructions.Get(i), "Next");
-				
-				break;		
-			case 29:
-				ProgressBar.SetProgress(6, 8);
-				
-				IOtask1Block block10 = new IOtask1Block();
-				block10.nTargets = 3;
-				block10.nTrials = 1;
-				block10.offloadCondition = SessionInfo.sequence[cb][3];
-				block10.blockNum = -7;
-				block10.askArithmetic = true;
-				block10.Run();
-				break;
-			case 30:
-				Slider.Run(Instructions.Get(81), "0%", "100%");
-				break;
-			case 31:
-				PHP.logData("slider" + SessionInfo.sequence[cb][3], ""+Slider.getSliderValue(), true);
-				break;
-			case 32:
-				ClickPage.Run(Instructions.Get(9), "Next");
-				break;
-			case 33:
-				ProgressBar.SetProgress(7, 8);
-				
-				IOtask1Block block11 = new IOtask1Block();
-				block11.nTargets = 3;
-				block11.nTrials = 5;
-				block11.offloadCondition = SessionInfo.sequence[cb][3];
-				block11.blockNum = 4;
-				block11.askArithmetic = true;
-				block11.Run();
-				break;
-			case 34:
-				ProgressBar.SetProgress(8, 8);
-				
+			case 15:
 				// log data and check that it saves
-				String data = TimeStamp.Now() + ",";
-				data = data + SessionInfo.participantID + ",";
+				String data = Counterbalance.getFactorLevel("conditionOrder") + ",";
 				data = data + SessionInfo.gender + ",";
 				data = data + SessionInfo.age + ",";
-				data = data + Counterbalance.getFactorLevel("order");
+				data = data + TimeStamp.Now();
 
-				PHP.UpdateStatus("finished");
 				PHP.logData("finish", data, true);
 				break;
-			case 35:
-				ProgressBar.Hide();
-				
-				ClickPage.Run(Instructions.Get(10), "nobutton");
-				break;	
+			case 16:
+				// complete the experiment
+				Finish.Run();
+				break;
 			}
 			break;
+		
 
 		/********************************************/
 		/* no need to edit the code below this line */
@@ -405,19 +250,12 @@ public class SequenceHandler {
 				}
 				break;
 			case 8:
-				//record the participant's counterbalancing condition in the status table				
-				if (!SessionInfo.resume) {
-					PHP.UpdateStatus("" + Counterbalance.getCounterbalancingCell() + ",1,0,0,0,0");
-				} else {
-					SequenceHandler.Next();
-				}
-				break;
-			case 9:
 				SequenceHandler.SetLoop(0, true); // switch to and initialise the main loop
 				SequenceHandler.Next(); // start the loop
 				break;
 			}
 			break;
+			
 		case 2: // IOtask1 loop
 			switch (sequencePosition.get(2)) {
 			/*************************************************************
@@ -448,59 +286,10 @@ public class SequenceHandler {
 				SequenceHandler.SetLoop(2, true);
 				SequenceHandler.Next();
 				break;
-			}
-			break;
-		case 3: //IOtask2 loop
-			switch (sequencePosition.get(3)) {
-			/*************************************************************
-			 * The code here defines the sequence of events in subloop 3 *
-			 * This runs a single trial of IOtask2                       *
-			 *************************************************************/
-			case 1:
-				// first check if the block has ended. If so return control to the main sequence
-				// handler
-				IOtask2Block block = IOtask2BlockContext.getContext();
+				// TODO: mechanism to give post-trial feedback?
 				
-				if (block.currentTrial == block.nTrials) {
-					SequenceHandler.SetLoop(0,  false);
-				}
-				
-				SequenceHandler.Next();
-				break;
-			case 2:
-				IOtask2InitialiseTrial.Run();
-				break;
-			case 3:;
-				//present the pre-trial choice if appropriate
-				if (IOtask2BlockContext.currentTargetValue() > -1) {
-					IOtask2PreTrial.Run();
-				} else { //otherwise just skip to the start of the block
-					if ((IOtask2BlockContext.getTrialNum() > 0)&&(IOtask2BlockContext.countdownTimer())) {
-						//if we're past the first trial and there's a timer, click to begin
-						ClickPage.Run("Ready?", "Continue");
-					} else {
-						SequenceHandler.Next();
-					}
-				}
-				break;
-			case 4:
-				if (IOtask2BlockContext.getNTrials() == -1) { //if nTrials has been set to -1, we quit before running
-					SequenceHandler.SetLoop(0,  false);
-					SequenceHandler.Next();
-				} else {
-					//otherwise, run the trial
-					IOtask2RunTrial.Run();
-				}
-				break;
-			case 5:
-				IOtask2PostTrial.Run();
-				break;
-			case 6:
-				//we have reached the end, so we need to restart the loop
-				SequenceHandler.SetLoop(3,  true);
-				SequenceHandler.Next();
-				break;
 			}
+		
 		}
 	}
 	
@@ -519,24 +308,19 @@ public class SequenceHandler {
 			sequencePosition.set(whichLoop, 0);
 		}
 	}
-	
-	// get current loop
-	public static int GetLoop() {
-		return (whichLoop);
-	}
 
 	// set a new position
 	public static void SetPosition(int newPosition) {
 		sequencePosition.set(whichLoop, newPosition);
 	}
 
+	// get current loop
+	public static int GetLoop() {
+		return (whichLoop);
+	}
+	
 	// get current position
 	public static int GetPosition() {
 		return (sequencePosition.get(whichLoop));
-	}
-	
-	// get current position from particular loop
-	public static int GetPosition(int nLoop) {
-		return (sequencePosition.get(nLoop));
 	}
 }
